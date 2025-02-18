@@ -10,25 +10,31 @@ public class TaskList {
         this.tasks = new ArrayList<>();
     }
 
-    public void addTask(String task) { //добавление задачи в список
+    public boolean addTask(String task) { //добавление задачи в список
         if (tasks.contains(task)) { // проверка на содержание
-            throw new IllegalArgumentException("Уже существует");
+            System.out.println("Уже существует");
+            return false;
         }
         tasks.add(task);
+        return true;
     }
 
-    public void removeTaskByIndex(int index) { //удаление по индексу
+    public boolean removeTaskByIndex(int index) { //удаление по индексу
         if (index < 0 || index >= tasks.size()) { //условия для корректной работы
-            throw new IndexOutOfBoundsException("Не существует");
+            System.out.println("Не существует");
+            return false;
         }
         tasks.remove(index);
+        return true;
     }
 
-    public void removeTaskByName(String name) { //удаление по названию
+    public boolean removeTaskByName(String name) { //удаление по названию
         if (!tasks.contains(name)) { // проверка на содержание
-            throw new IllegalArgumentException("Не существует");
+            System.out.println("Не существует");
+            return false;
         }
         tasks.remove(name);
+        return true;
     }
 
     public void removeTasksByKeyword(String keyword) { //удаление по ключу

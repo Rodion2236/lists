@@ -54,8 +54,8 @@ public class UserInterface {
                 default:
                     System.out.println("Введен некорректный номер операции");
             }
-        } catch (Exception e) {
-            System.out.println("Произошла ошибка " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Введен некорректный номер операции");
         }
     }
 
@@ -64,13 +64,12 @@ public class UserInterface {
     }
 
     private void addTask() { //добавление задачи в список ui
-        System.out.println("Введите название задачи: ");
+        System.out.println("Введите название задачи");
         String task = sc.nextLine();
-        try {
-            taskList.addTask(task);
+        if (taskList.addTask(task)) {
             System.out.println("Задание добавлено успешно");
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        } else {
+            System.out.println("Уже существует");
         }
         showTasks();
     }
@@ -96,10 +95,13 @@ public class UserInterface {
         String input = sc.nextLine();
         try {
             int index = Integer.parseInt(input);
-            taskList.removeTaskByIndex(index - 1);
-            System.out.println("Задание удалено успешно");
-        } catch (NumberFormatException | IndexOutOfBoundsException e) {
-            System.out.println("Неверный номер задачи!");
+            if (taskList.removeTaskByIndex(index - 1)) {
+                System.out.println("Задание удалено успешно");
+            } else {
+                System.out.println("Не существует");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Введено некорректное значение");
         }
         showTasks();
     }
@@ -111,11 +113,10 @@ public class UserInterface {
         }
         System.out.println("Введите задачу для удаления");
         String task = sc.nextLine();
-        try {
-            taskList.removeTaskByName(task);
+        if (taskList.removeTaskByName(task)) {
             System.out.println("Задание удалено успешно");
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        } else {
+            System.out.println("Не существует");
         }
         showTasks();
     }
